@@ -78,6 +78,10 @@ public class CodonTableMain {
 						+ "to \"%s\"...", writeLoc));
 				// write the table to a file
 				try (BufferedWriter br = new BufferedWriter(new FileWriter(writeLoc))) {
+					/*
+					 * It is assumed system default encoding works. For a final assessment of this 
+					 * matter the CLC codon table files have to be examined on different systems.
+					 */
 					br.write(usageTable);
 					CodonTableMain.LOG.logAndPrint(Level.INFO, "Done.");
 				} catch (IOException clcWriteException) {
@@ -94,6 +98,9 @@ public class CodonTableMain {
 			CodonTableMain.LOG.logAndPrint(Level.SEVERE, String.format("The URL created from "
 					+ "species identifier \"%s\" and genetic code identifier \"%s\" is invalid.", 
 					CodonTableMain.species, CodonTableMain.geneticCode), e1);	
+		} catch (IllegalArgumentException e2) {
+			CodonTableMain.LOG.logAndPrint(Level.SEVERE, String.format("The specified arguments "
+					+ "%s are invalid.", Arrays.toString(args)), e2);
 		}
 		
 		try {
